@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estadística y Probabilidad - Calculadora Completa</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Defer para que cargue después del HTML -->
+    <script src="script.js" defer></script>
+</head>
+<body>
+
+    <header>
+        <div class="logo">ProbStat <span style="color:white">Calc</span></div>
+        <nav id="mainNav">
+            <!-- Usamos data-section para manejar la navegación desde JS -->
+            <button data-section="descriptiva" class="active">Descriptiva</button>
+            <button data-section="frecuencias">Frecuencias</button>
+            <button data-section="graficos">Gráficos</button>
+            <button data-section="conjuntos">Conjuntos</button>
+            <button data-section="probabilidad">Probabilidad</button>
+            <button data-section="arbol">Regla Mult. & Árbol</button>
+            <button data-section="combinatoria">Combinatoria</button>
+        </nav>
+        <button class="theme-toggle">Modo Oscuro</button>
+    </header>
+
+    <main>
+        <!-- SECCIÓN 1: ESTADÍSTICA DESCRIPTIVA -->
+        <section id="descriptiva" class="active">
+            <h2>Estadística Descriptiva</h2>
+            <div class="input-group">
+                <label for="dataInput">Datos (separados por comas o espacios):</label>
+                <input type="text" id="dataInput" placeholder="Ej: 10, 20, 15, 30, 25, 10, 40...">
+            </div>
+            <div class="btn-group">
+                <button id="btnRandom" class="action-btn">Generar 20 Aleatorios (1-100)</button>
+                <button id="btnCalcDesc" class="action-btn">Calcular</button>
+            </div>
+
+            <div class="results-grid" id="descResults">
+                <div class="result-card"><h4>Media</h4><p id="resMedia">-</p></div>
+                <div class="result-card"><h4>Mediana</h4><p id="resMediana">-</p></div>
+                <div class="result-card"><h4>Moda</h4><p id="resModa">-</p></div>
+                <div class="result-card"><h4>Mínimo</h4><p id="resMin">-</p></div>
+                <div class="result-card"><h4>Máximo</h4><p id="resMax">-</p></div>
+                <div class="result-card"><h4>Rango</h4><p id="resRango">-</p></div>
+                <div class="result-card"><h4>Varianza (Muestral)</h4><p id="resVarianza">-</p></div>
+                <div class="result-card"><h4>Desviación Estándar</h4><p id="resDesv">-</p></div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 2: TABLA DE FRECUENCIAS -->
+        <section id="frecuencias">
+            <h2>Tabla de Frecuencias</h2>
+            <p>Utiliza los datos ingresados en la sección "Estadística Descriptiva".</p>
+            <button id="btnFreq" class="action-btn">Generar Tabla</button>
+            
+            <div class="table-container">
+                <table id="freqTable">
+                    <thead>
+                        <tr>
+                            <th>Valor (x)</th>
+                            <th>Frecuencia Absoluta (fi)</th>
+                            <th>Frecuencia Relativa (fr)</th>
+                            <th>Frec. Abs. Acumulada (Fi)</th>
+                            <th>Frec. Rel. Acumulada (Fr)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td colspan="5">Calcula primero los datos...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 3: GRÁFICOS -->
+        <section id="graficos">
+            <h2>Gráficos Estadísticos</h2>
+            <p>Generados con los datos de "Estadística Descriptiva".</p>
+            <div style="margin-bottom: 15px;">
+                <button id="btnHist" class="action-btn">Histograma</button>
+                <button id="btnPoly" class="action-btn">Polígono</button>
+                <button id="btnOgive" class="action-btn">Ojiva</button>
+                <button id="btnPareto" class="action-btn">Pareto</button>
+            </div>
+            
+            <div class="canvas-container">
+                <!-- Eliminados atributos fijos width/height para que el JS controle el tamaño responsive -->
+                <canvas id="statsCanvas" aria-label="Gráfico estadístico generado dinámicamente"></canvas>
+            </div>
+            <p id="graphTitle" style="text-align: center; font-weight: bold; margin-top: 10px;">Selecciona un gráfico</p>
+        </section>
+
+        <!-- SECCIÓN 4: CONJUNTOS -->
+        <section id="conjuntos">
+            <h2>Operaciones con Conjuntos</h2>
+            <div class="sets-grid">
+                <div>
+                    <label>Universo (U):</label>
+                    <input type="text" id="setU" placeholder="Ej: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10">
+                </div>
+                <div>
+                    <label>Conjunto A:</label>
+                    <input type="text" id="setA" placeholder="Ej: 1, 2, 3, 4, 5">
+                </div>
+                <div>
+                    <label>Conjunto B:</label>
+                    <input type="text" id="setB" placeholder="Ej: 4, 5, 6, 7, 8">
+                </div>
+            </div>
+
+            <div class="btn-group">
+                <button id="btnUnion" class="action-btn">A ∪ B</button>
+                <button id="btnInter" class="action-btn">A ∩ B</button>
+                <button id="btnDiffAB" class="action-btn">A - B</button>
+                <button id="btnDiffBA" class="action-btn">B - A</button>
+                <button id="btnCompA" class="action-btn">A' (Complemento)</button>
+            </div>
+
+            <div class="result-card" style="margin-top: 20px;">
+                <h4>Resultado:</h4>
+                <p id="setResult">{ }</p>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 5: PROBABILIDAD SIMPLE -->
+        <section id="probabilidad">
+            <h2>Probabilidad Simple</h2>
+            <div class="input-group">
+                <label>Casos Favorables (n(A)):</label>
+                <input type="number" id="probFav" placeholder="0">
+            </div>
+            <div class="input-group">
+                <label>Casos Posibles (n(S)):</label>
+                <input type="number" id="probTotal" placeholder="0">
+            </div>
+            <button id="btnProb" class="action-btn">Calcular Probabilidad</button>
+
+            <div class="results-grid" style="margin-top: 20px;">
+                <div class="result-card"><h4>Probabilidad (Decimal)</h4><p id="resProbDec">-</p></div>
+                <div class="result-card"><h4>Probabilidad (%)</h4><p id="resProbPerc">-</p></div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 6: REGLA MULTIPLICATIVA Y ÁRBOL -->
+        <section id="arbol">
+            <h2>Regla Multiplicativa y Diagrama de Árbol</h2>
+            <div class="sets-grid">
+                <div>
+                    <label>P(A) (Probabilidad del primer evento):</label>
+                    <input type="number" id="probA" step="0.01" min="0" max="1" placeholder="Ej: 0.4">
+                </div>
+                <div>
+                    <label>P(B|A) (Prob. B dado A):</label>
+                    <input type="number" id="probBgivenA" step="0.01" min="0" max="1" placeholder="Ej: 0.7">
+                </div>
+            </div>
+            <button id="btnTree" class="action-btn">Calcular y Dibujar</button>
+
+            <div class="result-card" style="margin-top: 15px;">
+                <h4>P(A ∩ B) = P(A) * P(B|A)</h4>
+                <p id="resMult">-</p>
+            </div>
+
+            <div class="canvas-container" style="margin-top: 20px;">
+                <canvas id="treeCanvas" width="600" height="300" aria-label="Diagrama de árbol de probabilidad"></canvas>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 7: PERMUTACIONES Y COMBINACIONES -->
+        <section id="combinatoria">
+            <h2>Permutaciones y Combinaciones</h2>
+            <div class="sets-grid">
+                <div>
+                    <label>n (Total de elementos):</label>
+                    <input type="number" id="combN" placeholder="Ej: 10">
+                </div>
+                <div>
+                    <label>r (Elementos seleccionados):</label>
+                    <input type="number" id="combR" placeholder="Ej: 3">
+                </div>
+            </div>
+            <button id="btnComb" class="action-btn">Calcular</button>
+
+            <div class="results-grid" style="margin-top: 20px;">
+                <div class="result-card"><h4>Permutación (nPr)</h4><p id="resNpr">-</p></div>
+                <div class="result-card"><h4>Combinación (nCr)</h4><p id="resNcr">-</p></div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 App Estadística y Probabilidad. Desarrollado con HTML5, CSS3 y JS Vanilla.</p>
+    </footer>
+
+</body>
+</html>
